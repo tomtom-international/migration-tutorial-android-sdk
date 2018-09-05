@@ -23,11 +23,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    api("com.tomtom.online:sdk-maps:2.085@aar") {
-        transitive = true
-    }
-    api("com.tomtom.online:sdk-routing:2.085@aar") {
-        transitive = true
-    }
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    api("com.tomtom.online:sdk-maps:2.250")
+    api("com.tomtom.online:sdk-routing:2.250")
 }
