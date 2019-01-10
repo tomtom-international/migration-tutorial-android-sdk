@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             LatLng amsterdam = new LatLng(52.37, 4.90);
 
             RoutingApi routingApi = OnlineRoutingApi.create(getApplicationContext());
-            RouteQuery routeQuery = new RouteQueryBuilder(amsterdam, hague).withRouteType(RouteType.FASTEST);
+            RouteQuery routeQuery = new RouteQueryBuilder(amsterdam, hague).withRouteType(RouteType.FASTEST).build();
 
             routingApi.planRoute(routeQuery)
                     .subscribeOn(Schedulers.newThread())
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .subscribe(routeResult -> {
                         for (FullRoute fullRoute : routeResult.getRoutes()) {
                             RouteBuilder routeBuilder = new RouteBuilder(
-                                    fullRoute.getCoordinates()).isActive(true);
+                                    fullRoute.getCoordinates());
                             map.addRoute(routeBuilder);
                         }
                     });
