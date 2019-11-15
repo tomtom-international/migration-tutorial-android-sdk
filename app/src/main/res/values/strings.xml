@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Migration</string>
+    <string name="traffic_on">Traffic ON</string>
+    <string name="traffic_off">Traffic OFF</string>
+    <string name="route_show">Route SHOW</string>
 </resources>
