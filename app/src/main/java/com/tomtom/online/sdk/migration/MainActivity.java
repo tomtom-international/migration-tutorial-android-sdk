@@ -1,9 +1,10 @@
 package com.tomtom.online.sdk.migration;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.tomtom.online.sdk.common.location.LatLng;
 import com.tomtom.online.sdk.map.CameraPosition;
@@ -18,9 +19,11 @@ import com.tomtom.online.sdk.routing.RoutingApi;
 import com.tomtom.online.sdk.routing.data.FullRoute;
 import com.tomtom.online.sdk.routing.data.RouteQuery;
 import com.tomtom.online.sdk.routing.data.RouteQueryBuilder;
+import com.tomtom.online.sdk.routing.data.RouteResponse;
 import com.tomtom.online.sdk.routing.data.RouteType;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -53,11 +56,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             routingApi.planRoute(routeQuery)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(routeResult -> {
-                        for (FullRoute fullRoute : routeResult.getRoutes()) {
-                            RouteBuilder routeBuilder = new RouteBuilder(
-                                    fullRoute.getCoordinates());
-                            map.addRoute(routeBuilder);
+                    .subscribe(new DisposableSingleObserver<RouteResponse>() {
+                        @Override
+                        public void onSuccess(RouteResponse routeResponse) {
+                            for (FullRoute fullRoute : routeResponse.getRoutes()) {
+                                RouteBuilder routeBuilder = new RouteBuilder(
+                                        fullRoute.getCoordinates());
+                                map.addRoute(routeBuilder);
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
         });
