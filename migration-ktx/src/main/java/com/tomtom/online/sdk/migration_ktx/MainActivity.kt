@@ -61,6 +61,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         val amsterdam = LatLng(52.37, 4.90)
         val balloon = SimpleMarkerBalloon("Amsterdam")
         tomtomMap.addMarker(MarkerBuilder(amsterdam).markerBalloon(balloon))
-        tomtomMap.centerOn(CameraPosition.builder(amsterdam).zoom(7.0).build())
+        tomtomMap.centerOn(CameraPosition.builder().focusPosition(amsterdam).zoom(7.0).build())
     }
 }

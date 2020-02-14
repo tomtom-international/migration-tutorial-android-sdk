@@ -81,6 +81,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng amsterdam = new LatLng(52.37, 4.90);
         SimpleMarkerBalloon balloon = new SimpleMarkerBalloon("Amsterdam");
         tomtomMap.addMarker(new MarkerBuilder(amsterdam).markerBalloon(balloon));
-        tomtomMap.centerOn(CameraPosition.builder(amsterdam).zoom(7.0).build());
+        tomtomMap.centerOn(CameraPosition.builder().focusPosition(amsterdam).zoom(7.0).build());
     }
 }
