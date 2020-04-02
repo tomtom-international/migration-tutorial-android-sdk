@@ -14,22 +14,20 @@ import com.tomtom.online.sdk.routing.data.RouteType
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
-    private var map: TomtomMap? = null
+    private lateinit var map: TomtomMap
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val mapFragment = supportFragmentManager
-                .findFragmentById(R.id.mapFragment) as MapFragment?
-        mapFragment!!.getAsyncMap(this)
-        val btnTrafficOn = findViewById<Button>(R.id.btnTrafficOn)
+        (mapFragment as MapFragment).getAsyncMap(this)
         btnTrafficOn.setOnClickListener {
-            map!!.trafficSettings.turnOnVectorTrafficIncidents()
-            map!!.trafficSettings.turnOnVectorTrafficFlowTiles()
+            map.trafficSettings.turnOnVectorTrafficIncidents()
+            map.trafficSettings.turnOnVectorTrafficFlowTiles()
         }
-        val btnRouteShow = findViewById<Button>(R.id.btnRouteShow)
+        btnTrafficOff.setOnClickListener { map.trafficSettings.turnOffTraffic() }
         btnRouteShow.setOnClickListener {
             val amsterdam = LatLng(52.37, 4.90)
             val hague = LatLng(52.07, 4.30)
@@ -43,7 +41,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                             for (fullRoute in routeResponse.routes) {
                                 val routeBuilder = RouteBuilder(
                                         fullRoute.coordinates)
-                                map!!.addRoute(routeBuilder)
+                                map.addRoute(routeBuilder)
                             }
                         }
 
@@ -52,8 +50,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                         }
                     })
         }
-        val btnTrafficOff = findViewById<Button>(R.id.btnTrafficOff)
-        btnTrafficOff.setOnClickListener { v: View? -> map!!.trafficSettings.turnOffTraffic() }
     }
 
     override fun onMapReady(tomtomMap: TomtomMap) {

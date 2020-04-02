@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             map.getTrafficSettings().turnOnVectorTrafficFlowTiles();
         });
 
+        Button btnTrafficOff = findViewById(R.id.btnTrafficOff);
+        btnTrafficOff.setOnClickListener(v -> map.getTrafficSettings().turnOffTraffic());
+
         Button btnRouteShow = findViewById(R.id.btnRouteShow);
         btnRouteShow.setOnClickListener(v -> {
             LatLng amsterdam = new LatLng(52.37, 4.90);
@@ -69,9 +72,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         }
                     });
         });
-
-        Button btnTrafficOff = findViewById(R.id.btnTrafficOff);
-        btnTrafficOff.setOnClickListener(v -> map.getTrafficSettings().turnOffTraffic());
     }
 
     @Override
