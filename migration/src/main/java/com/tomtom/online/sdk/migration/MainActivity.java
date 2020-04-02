@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             map.getTrafficSettings().turnOnVectorTrafficFlowTiles();
         });
 
+        Button btnTrafficOff = findViewById(R.id.btnTrafficOff);
+        btnTrafficOff.setOnClickListener(v -> map.getTrafficSettings().turnOffTraffic());
+
         Button btnRouteShow = findViewById(R.id.btnRouteShow);
         btnRouteShow.setOnClickListener(v -> {
             LatLng amsterdam = new LatLng(52.37, 4.90);
@@ -69,9 +72,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         }
                     });
         });
-
-        Button btnTrafficOff = findViewById(R.id.btnTrafficOff);
-        btnTrafficOff.setOnClickListener(v -> map.getTrafficSettings().turnOffTraffic());
     }
 
     @Override
@@ -81,6 +81,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng amsterdam = new LatLng(52.37, 4.90);
         SimpleMarkerBalloon balloon = new SimpleMarkerBalloon("Amsterdam");
         tomtomMap.addMarker(new MarkerBuilder(amsterdam).markerBalloon(balloon));
-        tomtomMap.centerOn(CameraPosition.builder(amsterdam).zoom(7.0).build());
+        tomtomMap.centerOn(CameraPosition.builder().focusPosition(amsterdam).zoom(7.0).build());
     }
 }
